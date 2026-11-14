@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}MiniMart — Shop{% endblock %}
+{% block content %}
+<section class="hero"><div><p class="eyebrow">THE EVERYDAY STORE</p><h1>Good finds.<br><span>Better days.</span></h1><p>Useful products, simple shopping.</p></div><form class="search" method="get"><input name="q" value="{{ q }}" placeholder="Search products"><button>Search</button></form></section>
+<h2>Featured products</h2><section class="products">
+{% for p in products %}<article class="product-card"><a href="/products/{{ p.id }}"><img src="{{ p.image_url or 'https://placehold.co/600x400?text=MiniMart' }}" alt="{{ p.name }}"><div class="product-info"><h3>{{ p.name }}</h3><p>{{ p.description }}</p><strong>₹{{ "%.2f"|format(p.price) }}</strong></div></a><form method="post" action="/cart/add/{{ p.id }}"><input type="hidden" name="quantity" value="1"><button {% if p.stock == 0 %}disabled{% endif %}>{% if p.stock %}Add to cart{% else %}Out of stock{% endif %}</button></form></article>{% else %}<p>No products found.</p>{% endfor %}
+</section>{% endblock %}
